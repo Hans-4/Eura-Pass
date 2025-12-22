@@ -1,7 +1,7 @@
 import customtkinter as ctk
 from PIL import Image
 from tkinter import messagebox
-import config.app as app
+import config.colors as colors
 from services.password_service import PasswordService
 from models import user_session
 
@@ -9,10 +9,10 @@ class AddPasswordWindow(ctk.CTkFrame):
     def __init__(self, master, password_service: PasswordService):
         super().__init__(
             master,
-            fg_color=app.background_color,
+            fg_color=colors.background_color,
             corner_radius=0,
             border_width=1,
-            border_color=app.border_color,
+            border_color=colors.border_color,
             width=460
         )
 
@@ -33,8 +33,8 @@ class AddPasswordWindow(ctk.CTkFrame):
         close_button = ctk.CTkButton(
             self,
             text="",
-            fg_color=app.primary_color,
-            hover_color=app.hover_color,
+            fg_color=colors.primary_color,
+            hover_color=colors.hover_color,
             image=self.add_window_close_icon,
             width=25,
             height=25,
@@ -47,8 +47,8 @@ class AddPasswordWindow(ctk.CTkFrame):
             self,
             text="Login erstellen",
             font=("Manrope", 13),
-            fg_color=app.primary_color,
-            hover_color=app.hover_color,
+            fg_color=colors.primary_color,
+            hover_color=colors.hover_color,
             corner_radius=40,
             width=40,
             height=25,
@@ -70,8 +70,8 @@ class AddPasswordWindow(ctk.CTkFrame):
             entry = ctk.CTkEntry(
                 self,
                 placeholder_text=placeholder,
-                fg_color=app.second_button_color,
-                border_color=app.border_color,
+                fg_color=colors.second_button_color,
+                border_color=colors.border_color,
                 font=("Manrope", 16),
                 border_width=1,
                 corner_radius=10,

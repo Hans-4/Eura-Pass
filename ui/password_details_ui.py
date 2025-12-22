@@ -1,16 +1,15 @@
 import customtkinter as ctk
-import config.colors as app
+import config.colors as colors
 from services.password_service import PasswordService
 import webbrowser
 import services.database
 from tkinter import messagebox
-import config.colors
 
 class PasswordDetailsUI(ctk.CTkFrame):
     def __init__(self, master, password_service: PasswordService):
         super().__init__(
             master=master,
-            fg_color=app.background_color,
+            fg_color=colors.background_color,
             corner_radius=0
         )
         self.password_service = password_service
@@ -27,7 +26,7 @@ class PasswordDetailsUI(ctk.CTkFrame):
             self,
             text="Wähle ein Passwort aus der Liste aus",
             font=("Manrope", 16),
-            text_color=app.secondary_text_color
+            text_color=colors.secondary_text_color
         )
         placeholder_label.pack(expand=True)
 
@@ -42,7 +41,7 @@ class PasswordDetailsUI(ctk.CTkFrame):
             detail_container,
             text=password_dict["title"],
             font=("Manrope", 24, "bold"),
-            text_color=app.text_color
+            text_color=colors.text_color
         ).pack(pady=(0, 20))
 
         self._create_detail_row(
@@ -77,14 +76,14 @@ class PasswordDetailsUI(ctk.CTkFrame):
                 detail_container,
                 text="Notizen:",
                 font=("Manrope", 14, "bold"),
-                text_color=app.text_color
+                text_color=colors.text_color
             ).pack(pady=(15, 5), anchor="w")
 
             notes_textbox = ctk.CTkTextbox(
                 detail_container,
                 font=("Manrope", 14),
-                fg_color=app.second_button_color,
-                border_color=app.border_color,
+                fg_color=colors.second_button_color,
+                border_color=colors.border_color,
                 border_width=1,
                 height=100
             )
@@ -96,23 +95,23 @@ class PasswordDetailsUI(ctk.CTkFrame):
             detail_container,
             text="Passwort löschen",
             command=self.delete_password,
-            fg_color=config.colors.delete_button_color,
-            hover_color=config.colors.delete_button_hover_color,
+            fg_color=colors.delete_button_color,
+            hover_color=colors.delete_button_hover_color,
         )
         self.delete_button.pack(pady=10)
 
     def _create_detail_row(self, parent, label: str, value: str, is_link: bool = False):
-        row_frame = ctk.CTkFrame(parent, fg_color="transparent", bg_color=app.background_color, border_width=1, corner_radius=15,)
+        row_frame = ctk.CTkFrame(parent, fg_color="transparent", bg_color=colors.background_color, border_width=1, corner_radius=15, )
         row_frame.pack(pady=5, fill="x")
 
         ctk.CTkLabel(
             row_frame,
             text=label,
             font=("Manrope", 14, "bold"),
-            text_color=app.text_color,
+            text_color=colors.text_color,
         ).pack(side="left", padx=(20,10), pady=1)
 
-        text_color = "#3498db" if is_link else app.text_color
+        text_color = "#3498db" if is_link else colors.text_color
 
         if is_link:
 
@@ -121,7 +120,7 @@ class PasswordDetailsUI(ctk.CTkFrame):
                 text=value,
                 font=("Manrope", 14),
                 text_color=text_color,
-                fg_color=app.background_color,
+                fg_color=colors.background_color,
                 corner_radius=0,
                 hover=False,
                 cursor="hand2",
@@ -137,7 +136,7 @@ class PasswordDetailsUI(ctk.CTkFrame):
                 font=("Manrope", 14),
                 text_color=text_color,
                 height=14,
-                fg_color=app.background_color,
+                fg_color=colors.background_color,
                 corner_radius=0,
             )
             textbox.insert("1.0", value)

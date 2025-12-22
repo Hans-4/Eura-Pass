@@ -1,7 +1,7 @@
 import webbrowser
 import customtkinter as ctk
 from tkinter import messagebox
-import config.app as app
+import config.colors as colors
 from models import user_session
 from services.auth_service import AuthService
 
@@ -15,7 +15,7 @@ class LoginWindow(ctk.CTkToplevel):
         self.title("Eura Pass - Anmeldung")
         self.geometry("400x500")
         self.resizable(False, False)
-        self.configure(fg_color=app.background_color)
+        self.configure(fg_color=colors.background_color)
         self.protocol("WM_DELETE_WINDOW", self.on_closing)
 
         self.create_login_tab()
@@ -51,7 +51,7 @@ class LoginWindow(ctk.CTkToplevel):
             self.main_login_frame,
             text="Willkommen zurück",
             font=("Manrope", 24, "bold"),
-            text_color=app.text_color
+            text_color=colors.text_color
         )
         login_title_label.pack(pady=(100, 20))
 
@@ -60,9 +60,9 @@ class LoginWindow(ctk.CTkToplevel):
             placeholder_text="E-Mail oder Benutzername",
             width=300, height=40,
             font=("Manrope", 16),
-            fg_color=app.second_button_color,
-            text_color=app.text_color,
-            border_color=app.border_color,
+            fg_color=colors.second_button_color,
+            text_color=colors.text_color,
+            border_color=colors.border_color,
             border_width=1,
             corner_radius=40
         )
@@ -73,10 +73,10 @@ class LoginWindow(ctk.CTkToplevel):
             placeholder_text="Passwort",
             width=300, height=40,
             font=("Manrope", 16),
-            fg_color=app.second_button_color,
-            text_color=app.text_color,
+            fg_color=colors.second_button_color,
+            text_color=colors.text_color,
             show="*",
-            border_color=app.border_color,
+            border_color=colors.border_color,
             border_width=1,
             corner_radius=40
         )
@@ -87,9 +87,9 @@ class LoginWindow(ctk.CTkToplevel):
             self.main_login_frame,
             text="Passwort anzeigen",
             font=("Manrope", 13),
-            text_color=app.text_color,
+            text_color=colors.text_color,
             border_width=1,
-            border_color=app.border_color,
+            border_color=colors.border_color,
             width=300,
             checkbox_height=20,
             checkbox_width=20,
@@ -106,9 +106,9 @@ class LoginWindow(ctk.CTkToplevel):
             command=self.handle_login,
             width=300, height=40,
             font=("Manrope", 16, "bold"),
-            text_color=app.text_color,
-            fg_color=app.primary_color,
-            hover_color=app.hover_color,
+            text_color=colors.text_color,
+            fg_color=colors.primary_color,
+            hover_color=colors.hover_color,
             corner_radius=40
         )
         login_button.pack(pady=(30, 25))
@@ -118,7 +118,7 @@ class LoginWindow(ctk.CTkToplevel):
             text="Neu bei Eura? Konto erstellen",
             command=self.switch_tab,
             font=("Manrope", 14),
-            text_color=app.text_color,
+            text_color=colors.text_color,
             fg_color="transparent",
             hover=False,
         )
@@ -134,7 +134,7 @@ class LoginWindow(ctk.CTkToplevel):
             self.main_registration_frame,
             text="Erstelle dein Konto",
             font=("Manrope", 24, "bold"),
-            text_color=app.text_color
+            text_color=colors.text_color
         )
         login_title_label.pack(pady=(20, 20))
 
@@ -143,9 +143,9 @@ class LoginWindow(ctk.CTkToplevel):
             placeholder_text="E-Mail",
             width=300, height=40,
             font=("Manrope", 16),
-            fg_color=app.second_button_color,
-            text_color=app.text_color,
-            border_color=app.border_color,
+            fg_color=colors.second_button_color,
+            text_color=colors.text_color,
+            border_color=colors.border_color,
             border_width=1,
             corner_radius=40
         )
@@ -156,9 +156,9 @@ class LoginWindow(ctk.CTkToplevel):
             placeholder_text="Benutzername",
             width=300, height=40,
             font=("Manrope", 16),
-            fg_color=app.second_button_color,
-            text_color=app.text_color,
-            border_color=app.border_color,
+            fg_color=colors.second_button_color,
+            text_color=colors.text_color,
+            border_color=colors.border_color,
             border_width=1,
             corner_radius=40
         )
@@ -169,9 +169,9 @@ class LoginWindow(ctk.CTkToplevel):
             placeholder_text="Passwort",
             width=300, height=40,
             font=("Manrope", 16),
-            fg_color=app.second_button_color,
-            text_color=app.text_color,
-            border_color=app.border_color,
+            fg_color=colors.second_button_color,
+            text_color=colors.text_color,
+            border_color=colors.border_color,
             border_width=1,
             corner_radius=40
         )
@@ -182,9 +182,9 @@ class LoginWindow(ctk.CTkToplevel):
             placeholder_text="Passwort bestätigen",
             width=300, height=40,
             font=("Manrope", 16),
-            fg_color=app.second_button_color,
-            text_color=app.text_color,
-            border_color=app.border_color,
+            fg_color=colors.second_button_color,
+            text_color=colors.text_color,
+            border_color=colors.border_color,
             border_width=1,
             corner_radius=40
         )
@@ -196,9 +196,9 @@ class LoginWindow(ctk.CTkToplevel):
             command=self.handle_registration,
             width=300, height=40,
             font=("Manrope", 16, "bold"),
-            text_color=app.text_color,
-            fg_color=app.primary_color,
-            hover_color=app.hover_color,
+            text_color=colors.text_color,
+            fg_color=colors.primary_color,
+            hover_color=colors.hover_color,
             corner_radius=40
         )
         registrate_button.pack(pady=(30, 25))
@@ -208,7 +208,7 @@ class LoginWindow(ctk.CTkToplevel):
             text="Du hast bereits ein Konto? Anmelden",
             command=self.switch_tab,
             font=("Manrope", 14),
-            text_color=app.text_color,
+            text_color=colors.text_color,
             fg_color="transparent",
             hover=False,
         )
@@ -219,7 +219,7 @@ class LoginWindow(ctk.CTkToplevel):
             text="Wenn du fortfährst, erklärst du dich mit unseren Allgemeinen\n Geschäftsbedingungen und Datenschutzerklärung einverstanden.",
             command=lambda: webbrowser.open("https://eurapass.com/terms-of-use/"),
             font=("Manrope", 10),
-            text_color=app.secondary_text_color,
+            text_color=colors.secondary_text_color,
             fg_color="transparent",
             hover=False,
         )

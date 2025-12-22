@@ -1,5 +1,5 @@
 import customtkinter as ctk
-import config.app as app
+import config.colors as colors
 from services.password_service import PasswordService
 from models import user_session
 
@@ -14,8 +14,8 @@ class PasswordOverviewUI:
             width=300,
             corner_radius=0,
             border_width=1,
-            border_color=app.border_color,
-            fg_color=app.background_color,
+            border_color=colors.border_color,
+            fg_color=colors.background_color,
         )
         self.scroll_frame.grid(column=0, row=1, sticky="nsew")
 
@@ -49,7 +49,7 @@ class PasswordOverviewUI:
                 fg_color="transparent",
                 corner_radius=0,
                 border_width=1,
-                border_color=app.border_color,
+                border_color=colors.border_color,
                 width=280,
                 height=100
             )
@@ -59,7 +59,7 @@ class PasswordOverviewUI:
                 password_frame,
                 text=title,
                 font=("Manrope", 20, "bold"),
-                text_color=app.secondary_text_color,
+                text_color=colors.secondary_text_color,
                 fg_color="transparent",
                 corner_radius=0,
                 width=280,
@@ -73,7 +73,7 @@ class PasswordOverviewUI:
                 password_frame,
                 text=username,
                 font=("Manrope", 15),
-                text_color=app.secondary_text_color,
+                text_color=colors.secondary_text_color,
                 width=280,
                 fg_color="transparent",
                 corner_radius=0,
