@@ -1,10 +1,10 @@
 import customtkinter as ctk
-import config.app as app
+import config.colors as app
 from services.password_service import PasswordService
 import webbrowser
 import services.database
 from tkinter import messagebox
-
+import config.colors
 
 class PasswordDetailsUI(ctk.CTkFrame):
     def __init__(self, master, password_service: PasswordService):
@@ -92,13 +92,12 @@ class PasswordDetailsUI(ctk.CTkFrame):
             notes_textbox.insert("1.0", password_dict["notes"])
             notes_textbox.configure(state="disabled")
 
-        # DELETE BUTTON - Fixed: changed master from self.master to detail_container
         self.delete_button = ctk.CTkButton(
-            detail_container,  # Changed from self.master
+            detail_container,
             text="Passwort löschen",
             command=self.delete_password,
-            fg_color="#d32f2f",
-            hover_color="#b71c1c"
+            fg_color=config.colors.delete_button_color,
+            hover_color=config.colors.delete_button_hover_color,
         )
         self.delete_button.pack(pady=10)
 
@@ -153,7 +152,6 @@ class PasswordDetailsUI(ctk.CTkFrame):
         if not self.current_password:
             return
 
-        # Confirm deletion
         result = messagebox.askyesno(
             "Passwort löschen",
             f"Möchten Sie das Passwort für '{self.current_password['title']}' wirklich löschen?"
@@ -163,13 +161,11 @@ class PasswordDetailsUI(ctk.CTkFrame):
             password_id = self.current_password.get('id')
 
             if password_id:
-                # Delete from database
                 success = self.password_service.delete_password(password_id)
 
                 if success:
                     messagebox.showinfo("Erfolg", "Passwort erfolgreich gelöscht")
                     self.show_placeholder()
-                    # Refresh the password list
                     if hasattr(self.master, 'password_overview_ui'):
                         self.master.password_overview_ui.refresh_passwords()
                 else:
