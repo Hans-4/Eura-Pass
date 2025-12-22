@@ -27,17 +27,32 @@ The interface is designed for speed and security:
 
 Eura Pass currently supports only German; English support is coming soon!
 
+# Upcoming Features
+
+## Security & Usability
+- **Password Strength Rater** – Evaluates password security and suggests stronger alternatives.
+  - *Features*: Length, complexity check, common mistake detection.
+  - **Search Functionality** – Optimized search with filters (date/category), autocomplete, precise matching.
+
+## Language & UI/UX Improvements
+- **English Language Support** – Full language switching for global accessibility.
+- **UI Redesign** – Modern design: white mode, intuitive navigation, optimized layouts.
+
+## Cloud Integration
+- **Cloud Version** – Cross-platform sync (offline + cloud storage).
+
+## Technical Development (C# Focus)
+- **Ui-Rewrite in C#**
+
 # Project Structure
 
-<pre>
 Eura Pass  
-├── main.py       # Main entry point  
-├── media/        # README documentation images 
-├── assets/       # App UI icons (close_icon.png, plus_icon.png)  
-├── services/     # Encryption and Database logic  
-├── ui/           # Window and Frame components  
-└── config/       # Theme and color settings
-</pre>
+├── main.py # Main entry point  
+├── media/ # README documentation images 
+├── assets/ # App UI icons (close_icon.png, plus_icon.png)  
+├── services/ # Encryption and Database logic  
+├── ui/ # Window and Frame components  
+└── config/ # Theme and color settings
 
 # Dependencies
 
