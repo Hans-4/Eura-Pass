@@ -1,12 +1,18 @@
+# API
 import customtkinter as ctk
-import config.colors as colors
-from services.password_service import PasswordService
 import webbrowser
-import services.database
 from tkinter import messagebox
+
+# Services
+from services.password_service import PasswordService
+
+# Config
+import config.colors as colors
 
 class PasswordDetailsUI(ctk.CTkFrame):
     def __init__(self, master, password_service: PasswordService):
+        """UI component to display detailed information about a selected password."""
+
         super().__init__(
             master=master,
             fg_color=colors.background_color,
@@ -16,11 +22,13 @@ class PasswordDetailsUI(ctk.CTkFrame):
         self.grid(column=1, row=1, sticky="nsew")
         self.grid_columnconfigure(0, minsize=400)
 
-        self.current_password = None
-        self.show_placeholder()
+        self.current_password = None # Holds the currently displayed password details
+        self.show_placeholder() # Shows placeholder if no password is selected
 
     def show_placeholder(self):
-        self._clear_frame()
+        """Displays a placeholder message when no password is selected."""
+
+        self._clear_frame() # Clear existing content
 
         placeholder_label = ctk.CTkLabel(
             self,
@@ -31,12 +39,19 @@ class PasswordDetailsUI(ctk.CTkFrame):
         placeholder_label.pack(expand=True)
 
     def display_password_details(self, password_dict: dict):
-        self._clear_frame()
-        self.current_password = password_dict
+        """
+        Displays the details of the selected password.
+            - Title, Username, Password don't need a check as they are mandatory
+            - Website, 2FA Key, Notes are optional and displayed only if available
+           """
+
+        self._clear_frame() # Clear existing content
+        self.current_password = password_dict # Store current password details
 
         detail_container = ctk.CTkFrame(self, fg_color="transparent")
         detail_container.pack(pady=40, padx=40, fill="both", expand=True)
 
+        # Title
         ctk.CTkLabel(
             detail_container,
             text=password_dict["title"],
@@ -44,18 +59,21 @@ class PasswordDetailsUI(ctk.CTkFrame):
             text_color=colors.text_color
         ).pack(pady=(0, 20))
 
+        # Username
         self._create_detail_row(
             detail_container,
             "Benutzername:",
             password_dict["username"]
         )
 
+        # Password
         self._create_detail_row(
             detail_container,
             "Passwort:",
             password_dict["password"]
         )
 
+        # Website (if available)
         if password_dict.get("website"):
             self._create_detail_row(
                 detail_container,
@@ -64,6 +82,7 @@ class PasswordDetailsUI(ctk.CTkFrame):
                 is_link=True
             )
 
+        # 2FA Key (if available)
         if password_dict.get("two_fa_key"):
             self._create_detail_row(
                 detail_container,
@@ -71,6 +90,7 @@ class PasswordDetailsUI(ctk.CTkFrame):
                 password_dict["two_fa_key"]
             )
 
+        # Notes (if available)
         if password_dict.get("notes"):
             ctk.CTkLabel(
                 detail_container,
@@ -101,6 +121,11 @@ class PasswordDetailsUI(ctk.CTkFrame):
         self.delete_button.pack(pady=10)
 
     def _create_detail_row(self, parent, label: str, value: str, is_link: bool = False):
+        """
+        Sets the values to a frame and an object.
+        Links get a button so that you can open the link directly with them.
+        """
+
         row_frame = ctk.CTkFrame(parent, fg_color="transparent", bg_color=colors.background_color, border_width=1, corner_radius=15, )
         row_frame.pack(pady=5, fill="x")
 
@@ -113,6 +138,7 @@ class PasswordDetailsUI(ctk.CTkFrame):
 
         text_color = "#3498db" if is_link else colors.text_color
 
+        # Check if the value is a link and if true create a clickable button that opens the link in the default web browser
         if is_link:
 
             link_button = ctk.CTkButton(
@@ -130,7 +156,7 @@ class PasswordDetailsUI(ctk.CTkFrame):
             link_button.pack(side="left" , pady=1)
 
         else:
-
+            # Using a textbox to allow easy copying values because the label doesn't support it
             textbox = ctk.CTkTextbox(
                 row_frame,
                 font=("Manrope", 14),
@@ -141,21 +167,25 @@ class PasswordDetailsUI(ctk.CTkFrame):
             )
             textbox.insert("1.0", value)
             textbox.pack(side="left" , pady=1)
-            textbox.configure(state="disabled")
+            textbox.configure(state="disabled") # Make the textbox read-only
 
     def _clear_frame(self):
+        """Clears all widgets from the frame."""
         for widget in self.winfo_children():
-            widget.destroy()
+            widget.destroy() # Remove each widget
 
     def delete_password(self):
+        """Deletes the currently displayed password after user confirmation."""
         if not self.current_password:
             return
 
+        # Ask for user confirmation before deletion
         result = messagebox.askyesno(
             "Passwort löschen",
             f"Möchten Sie das Passwort für '{self.current_password['title']}' wirklich löschen?"
         )
 
+        # If user confirmed deletion or not
         if result:
             password_id = self.current_password.get('id')
 

@@ -1,3 +1,4 @@
+#API
 import customtkinter as ctk
 from PIL import Image
 
@@ -21,41 +22,50 @@ import config.colors as app
 
 class App(ctk.CTk):
     def __init__(self):
+        """
+        Initializes the main application window and core components.
+
+        - Configures window properties (title, size, appearance).
+        - Sets up services:
+            - Database connection
+            - Authentication service
+            - Password management service
+        - Initializes UI components:
+            - Title bar and icons
+            - Password overview, details, and add windows
+        - Configures grid layout for responsive design.
+        """
         super().__init__()
 
-        self.title("Eura Pass")
-        self.geometry("1080x720")
-        self.minsize(1080, 600)
-        ctk.set_appearance_mode("dark")
-        self.configure(fg_color=app.background_color)
+        self.title("Eura Pass") #Set window title
+        self.geometry("1080x720") #Set window size
+        self.minsize(1080, 600) #Set minimum window size
+        ctk.set_appearance_mode("dark") #Set appearance mode
+        self.configure(fg_color=app.background_color) #Set background color
 
         self.withdraw()
 
-        # Services initialisieren
         self.database = Database()
         self.auth_service = AuthService(self.database)
         self.password_service = PasswordService(self.database)
 
-        # Grid konfigurieren
         self.grid_rowconfigure(0, weight=0)
         self.grid_rowconfigure(1, weight=1)
         self.grid_columnconfigure(0, weight=0)
         self.grid_columnconfigure(1, weight=1)
 
-        # UI-Komponenten
         self._create_title_bar_frame()
         self._load_icons()
 
-        # UI-Elemente initialisieren
         self.password_overview_ui = PasswordOverviewUI(self, self.password_service)
         self.password_details_ui = PasswordDetailsUI(self, self.password_service)
         self.add_window = AddPasswordWindow(self, self.password_service)
 
-        # State
-        self.distance_to_search_bar = 50
-        self.is_add_sidebar_open = False
+        self.distance_to_search_bar = 50 # Initial the default distance from title elements to search bar
+        self.is_add_sidebar_open = False # State variable for add sidebar visibility
 
     def _create_title_bar_frame(self):
+        """Creates the title bar frame for the application."""
         self.title_bar = ctk.CTkFrame(
             self,
             fg_color=app.background_color,
@@ -66,23 +76,24 @@ class App(ctk.CTk):
         )
 
     def _load_icons(self):
-        self.home_screen_search_bar_icon = ctk.CTkImage(
+        """Loads images for various icons used in the application."""
+        self.home_screen_search_bar_icon = ctk.CTkImage( # Magnifying glass icon for the search bar
             light_image=Image.open("assets/home_screen_search_bar_icon.png"),
             size=(20, 20)
         )
-        self.add_button_icon = ctk.CTkImage(
+        self.add_button_icon = ctk.CTkImage( # Plus icon for the add password button
             light_image=Image.open("assets/plus_icon.png"),
             size=(15, 15)
         )
-        self.logo_title_icon = ctk.CTkImage(
+        self.logo_title_icon = ctk.CTkImage( # Logo icon for the title bar
             light_image=Image.open("assets/logo_title_icon.png"),
             size=(30, 30)
         )
 
     def create_title_bar(self):
+        """Creates and configures the title bar with logo, title, search bar, and add button."""
         self.title_bar.grid(column=0, row=0, columnspan=2, sticky="nsew")
 
-        # Grid konfigurieren
         self.title_bar.grid_columnconfigure(0, weight=0)
         self.title_bar.grid_columnconfigure(1, weight=1)
         self.title_bar.grid_columnconfigure(2, weight=1)
@@ -113,7 +124,6 @@ class App(ctk.CTk):
 
         self._create_search_bar()
 
-        # Passwort hinzufügen Button
         self.add_new_password_button = ctk.CTkButton(
             self.title_bar,
             text="Passwort hinzufügen",
@@ -171,6 +181,7 @@ class App(ctk.CTk):
         self.password_search_bar.grid(row=0, column=1, padx=(0, 15), pady=0, sticky="ew")
 
     def toggle_add_sidebar(self):
+        """Toggles the visibility of the add password sidebar."""
         self.is_add_sidebar_open = not self.is_add_sidebar_open
 
         if self.is_add_sidebar_open:
@@ -182,6 +193,7 @@ class App(ctk.CTk):
             self.password_search_bar.configure(state="normal")
 
     def show_password_details(self, title: str, username: str):
+        """Displays the details of a selected password."""
         session = user_session.get_session()
 
         if not session.is_logged_in():
@@ -200,6 +212,7 @@ class App(ctk.CTk):
             self.password_details_ui.display_password_details(selected_password)
 
     def on_resize(self, event):
+        """Handles window resize events to adjust layout dynamically."""
         if event.widget != self:
             return
 
@@ -209,11 +222,9 @@ class App(ctk.CTk):
         if height < 100:
             return
 
-        # Berechne neuen Abstand basierend auf Fensterbreite
         distance_result = max(0, width - 1080)
         self.distance_to_search_bar = 50 + distance_result / 2
 
-        # Update Padding
         if hasattr(self, 'app_title') and self.app_title is not None:
             self.app_title.grid_configure(
                 padx=(90, self.distance_to_search_bar)

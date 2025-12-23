@@ -1,13 +1,26 @@
+# API
 import webbrowser
 import customtkinter as ctk
 from tkinter import messagebox
+
+#Config
 import config.colors as colors
+
+# Models
 from models import user_session
+
+# Services
 from services.auth_service import AuthService
 
 
 class LoginWindow(ctk.CTkToplevel):
     def __init__(self, master, auth_service: AuthService):
+        """
+        Initializes the login and registration window.
+
+        - Configures window properties (title, size, appearance).
+        -Sets up login and registration tabs with input fields and buttons.
+        """
         super().__init__(master)
         self.master = master
         self.auth_service = auth_service
@@ -16,16 +29,17 @@ class LoginWindow(ctk.CTkToplevel):
         self.geometry("400x500")
         self.resizable(False, False)
         self.configure(fg_color=colors.background_color)
-        self.protocol("WM_DELETE_WINDOW", self.on_closing)
+        self.protocol("WM_DELETE_WINDOW", self.on_closing) # Close the main window on close
 
         self.create_login_tab()
         self.create_registration_tab()
 
-        self.login_tab_open = True
-        self.main_login_frame.lift()
+        self.login_tab_open = True # Start with login tab
+        self.main_login_frame.lift() # Show login tab
 
     def switch_tab(self):
-        self.login_tab_open = not self.login_tab_open
+        """Switches between the login and registration tabs."""
+        self.login_tab_open = not self.login_tab_open # Toggle tab state
         if self.login_tab_open:
             self.main_registration_frame.lift()
             self._clear_registration_fields()
@@ -34,16 +48,20 @@ class LoginWindow(ctk.CTkToplevel):
             self._clear_login_fields()
 
     def _clear_login_fields(self):
+        """Clears the input fields in the login tab after switching tabs."""
         self.username_login_entry.delete(0, 'end')
         self.password_login_entry.delete(0, 'end')
 
     def _clear_registration_fields(self):
+        """Clears the input fields in the registration tab after switching tabs."""
         self.email_registration_entry.delete(0, 'end')
         self.username_registration_entry.delete(0, 'end')
         self.password_registration_entry_1.delete(0, 'end')
         self.password_registration_entry_2.delete(0, 'end')
 
     def create_login_tab(self):
+        """Creates the login tab UI components."""
+
         self.main_login_frame = ctk.CTkFrame(self, fg_color="transparent")
         self.main_login_frame.place(relx=0.5, rely=0.5, anchor="center", relwidth=1, relheight=1)
 
@@ -124,9 +142,11 @@ class LoginWindow(ctk.CTkToplevel):
         )
         switch_to_registration_tab.pack(pady=15)
 
-        self.bind("<Return>", lambda event: self.handle_login())
+        self.bind("<Return>", lambda event: self.handle_login()) # Bind Enter key to login
 
     def create_registration_tab(self):
+        """Creates the registration tab UI components."""
+
         self.main_registration_frame = ctk.CTkFrame(self, fg_color="transparent")
         self.main_registration_frame.place(relx=0.5, rely=0.5, anchor="center", relwidth=1, relheight=1)
 
@@ -225,12 +245,15 @@ class LoginWindow(ctk.CTkToplevel):
         )
         read_terms_button.pack(pady=0)
 
-        self.bind("<Return>", lambda event: self.handle_registration())
+        self.bind("<Return>", lambda event: self.handle_registration()) # Bind Enter key to registration
 
     def handle_login(self):
+        """Handles the login process when the login button is clicked."""
+
         username = self.username_login_entry.get()
         password = self.password_login_entry.get()
 
+        # Checks validity of login data
         is_valid, error_msg = self.auth_service.validate_login_data(username, password)
         if not is_valid:
             messagebox.showwarning("Eingabe fehlt", error_msg)
@@ -241,6 +264,7 @@ class LoginWindow(ctk.CTkToplevel):
         if user:
             user_id, email, username_db = user
 
+            # Initialize user session
             session = user_session.get_session()
             session.login(
                 user_id=user_id,
@@ -249,9 +273,10 @@ class LoginWindow(ctk.CTkToplevel):
                 email=email
             )
 
-            self.destroy()
-            self.master.deiconify()
+            self.destroy() # Close login window
+            self.master.deiconify() # Show main application window
 
+            # Refresh password overview UI after login
             if hasattr(self.master, 'password_overview_ui'):
                 self.master.password_overview_ui.refresh_passwords()
 
@@ -259,11 +284,14 @@ class LoginWindow(ctk.CTkToplevel):
             messagebox.showerror("Fehler", "Ungültiger Benutzername/E-Mail oder Passwort.")
 
     def handle_registration(self):
+        """Handles the registration process when the register button is clicked."""
+
         email = self.email_registration_entry.get()
         username = self.username_registration_entry.get()
         password_1 = self.password_registration_entry_1.get()
         password_2 = self.password_registration_entry_2.get()
 
+        # Checks validity of registration data
         is_valid, error_msg = self.auth_service.validate_registration_data(
             email, username, password_1, password_2
         )
@@ -283,8 +311,11 @@ class LoginWindow(ctk.CTkToplevel):
             self.username_registration_entry.delete(0, 'end')
 
     def toggle_password_visibility(self):
+        """Toggles the visibility of the password in the login tab."""
+
         show_password = self.check_show_password_checkbox_state.get()
         self.password_login_entry.configure(show="" if show_password == 1 else "*")
 
     def on_closing(self):
+        """Handles the window close event by closing the main application."""
         self.master.destroy()
