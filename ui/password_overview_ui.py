@@ -10,7 +10,6 @@ from services.password_service import PasswordService
 # Models
 from models import user_session
 
-
 class PasswordOverviewUI:
     def __init__(self, master, password_service: PasswordService):
         """Initializes the Password Overview UI component.
@@ -25,8 +24,6 @@ class PasswordOverviewUI:
             master=master,
             width=300,
             corner_radius=0,
-            border_width=1,
-            border_color=colors.border_color,
             fg_color=colors.background_color,
         )
         self.scroll_frame.grid(column=0, row=1, sticky="nsew")
