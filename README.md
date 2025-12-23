@@ -11,7 +11,7 @@ The application uses industry-standard encryption: **Fernet (AES-128)** for data
 # What does it look like?
 
 <div class="top-screenshot">
-    <img src="https://raw.githubusercontent.com/Hans-4/Eura-Pass/main/media/home-example-img.png" style="max-width: 100%; max-height: 35em;">
+    <img src="https://raw.githubusercontent.com/Hans-4/Eura-Pass/main/medi/home-example-img.png" style="max-width: 100%; max-height: 35em;">
 </div>
 
 The interface is designed for speed and security:
