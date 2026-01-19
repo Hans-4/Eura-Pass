@@ -25,25 +25,6 @@ The interface is designed for speed and security:
 
 - **German**
 
-Eura Pass currently supports only German; English support is coming soon!
-
-# Upcoming Features
-
-## Security & Usability
-- **Password Strength Rater** – Evaluates password security and suggests stronger alternatives.
-  - *Features*: Length, complexity check, common mistake detection.
-  - **Search Functionality** – Optimized search with filters (date/category), autocomplete, precise matching.
-
-## Language & UI/UX Improvements
-- **English Language Support** – Full language switching for global accessibility.
-- **UI Redesign** – Modern design: white mode, intuitive navigation, optimized layouts.
-
-## Cloud Integration
-- **Cloud Version** – Cross-platform sync (offline + cloud storage).
-
-## Technical Development (C# Focus)
-- **Ui-Rewrite in C#**
-
 # Project Structure
 
 Eura Pass  
