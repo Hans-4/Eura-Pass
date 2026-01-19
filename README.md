@@ -18,7 +18,6 @@ The interface is designed for speed and security:
 
 - **Zero-Knowledge Architecture**: Your master password is never stored; encryption keys are derived on-the-fly.
 - **Encrypted Metadata**: Unlike many managers, Eura Pass encrypts titles, usernames, and notes—not just the password.
-- **Animated Sidebar**: A smooth sliding window for adding new credentials.
 - **Deep Integration**: Built-in support for TOTP keys, websites, and custom notes.
 
 # Languages
